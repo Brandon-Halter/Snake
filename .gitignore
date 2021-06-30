@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 #Python in Visual Studio files
 *.pyproj
+
+#Solution file
+Snake.sln
