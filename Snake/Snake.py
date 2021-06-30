@@ -2,7 +2,7 @@ from graphics import *
 import time
 from pynput import keyboard
 
-test = "gitTest"
+
 snake = Rectangle(Point(380,395), Point(420,405))
 win = GraphWin("My Circle", 800, 800)
 runGame = True
