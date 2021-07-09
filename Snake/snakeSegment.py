@@ -1,3 +1,5 @@
+from graphics import *
+
 class snakeSegment:
     segment = Rectangle(Point(0,0), Point(0,0))
     segP1 = Point(0,0)
@@ -5,7 +7,7 @@ class snakeSegment:
     segDirection = "right"
     segLength = 0
 
-    def __init__(self, p1, p2, direction, length, segment):
+    def __init__(self, p1, p2, direction, length):
         self.segP1 = p1
         self.segP2 = p2
         self.segDirection = direction

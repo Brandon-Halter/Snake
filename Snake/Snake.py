@@ -1,11 +1,11 @@
 from graphics import *
 from pynput import keyboard
 import time
-import snakeSegment
+from snakeSegment import snakeSegment
 
 #Create global variables
-test = "test"
-snake = Rectangle(Point(380,395), Point(420,405))
+initialSegment = snakeSegment(Point(380,395), Point(420,405), "right", 40)
+segments = [initialSegment]
 win = GraphWin("My Circle", 800, 800)
 runGame = True
 direction = 'right'
@@ -38,19 +38,18 @@ listener = keyboard.Listener(on_press=on_press)
 
 #Draw initial window
 def initialize():
-	snake.setFill("green")
-	snake.setOutline("green")
-	snake.draw(win)
+	(initialSegment.segment).draw(win)
 
 #Run the game
 def runGame():
 	listener.start()
 
 	while(runGame):
-		moveSnake(direction)
+		for s in segments:
+			moveSnake(direction, s.segment)
 
 #Make the snake respond to movement inputs
-def moveSnake(direction):
+def moveSnake(direction, snake):
 	time.sleep(.001)
 	if direction == 'up':
 		snake.move(0, -2)
