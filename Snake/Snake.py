@@ -20,21 +20,25 @@ def on_press(key):
 			runGame = False
 			return False
 		elif key.char == 'd':
-			segments.append(snakeSegment(Point(200, 200), Point(220,240), direction, 40))
+			segments.append(snakeSegment(Point(200, 200), Point(210,220), direction, 20))
+			segments[0].segDirection = "right"
+			segments[0].turnSegment(direction)
 			direction = 'right'
-			segments[0].segDirection = direction
 		elif key.char == 'a':
-			segments.append(snakeSegment(Point(200, 200), Point(220,240), direction, 40))
+			segments.append(snakeSegment(Point(200, 200), Point(210,220), direction, 20))
+			segments[0].segDirection = "left"
+			segments[0].turnSegment(direction)
 			direction = 'left'
-			segments[0].segDirection = direction
 		elif key.char == 'w':
-			segments.append(snakeSegment(Point(200, 200), Point(240,220), direction, 40))
+			segments.append(snakeSegment(Point(200, 200), Point(220,210), direction, 20))
+			segments[0].segDirection = "up"
+			segments[0].turnSegment(direction)
 			direction = 'up'
-			segments[0].segDirection = direction
 		elif key.char == 's':
-			segments.append(snakeSegment(Point(200, 200), Point(240,220), direction, 40))
+			segments.append(snakeSegment(Point(200, 200), Point(220,210), direction, 20))
+			segments[0].segDirection = "down"
+			segments[0].turnSegment(direction)
 			direction = 'down'
-			segments[0].segDirection = direction
 
 	except:
 		pass

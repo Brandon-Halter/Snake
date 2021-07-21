@@ -92,15 +92,44 @@ class snakeSegment:
 
 #=================================================================================================
 
-    def turnSegment(self):
-        if self.direction == "right":
-            #Calculate coordinates after turn
+    def turnSegment(self, prevDirection):
+        if self.segDirection == "right":
+            #Calculate coordinates after turn and update height
             currentLocation = self.segment.getCenter()
-            self.segP1 = Point(currentLocation.getX() - 5, currentLocation.getY() + self.height/2)
-            self.segP2
-        elif self.direction == "left":
-            print(test)
-        elif self.direction == "up":
-            print(test)
-        else:
-            print(test)
+            if prevDirection == "down":
+                self.segP1 = Point(currentLocation.getX() - 5, currentLocation.getY() + self.segLength/2)
+                self.segP2 = Point(self.segP1.getX() + 20, self.segP1.getY() + 10)
+            elif prevDirection == "up":
+                self.segP1 = Point(currentLocation.getX() - 5, currentLocation.getY() - self.segLength/2)
+                self.segP2 = Point(self.segP1.getX() + 20, self.segP1.getY() - 10)
+            self.segLength = 10
+        elif self.segDirection == "left":
+            #Calculate coordinates after turn and update height
+            currentLocation = self.segment.getCenter()
+            if prevDirection == "down":
+                self.segP1 = Point(currentLocation.getX() + 5, currentLocation.getY() + self.segLength/2)
+                self.segP2 = Point(self.segP1.getX() - 20, self.segP1.getY() + 10)
+            elif prevDirection == "up":
+                self.segP1 = Point(currentLocation.getX() + 5, currentLocation.getY() - self.segLength/2)
+                self.segP2 = Point(self.segP1.getX() - 20, self.segP1.getY() - 10)
+            self.segLength = 10
+        elif self.segDirection == "up":
+            #Calculate coordinates after turn and update height
+            currentLocation = self.segment.getCenter()
+            if prevDirection == "left":
+                self.segP1 = Point(currentLocation.getX() - self.segLength/2, currentLocation.getY() + 5)
+                self.segP2 = Point(self.segP1.getX() + 10, self.segP1.getY() - 20)
+            elif prevDirection == "right":
+                self.segP1 = Point(currentLocation.getX() + self.segLength/2, currentLocation.getY() + 5)
+                self.segP2 = Point(self.segP1.getX() - 10, self.segP1.getY() - 20)
+            self.segLength = 10
+        elif self.segDirection == "down":
+            #Calculate coordinates after turn and update height
+            currentLocation = self.segment.getCenter()
+            if prevDirection == "left":
+                self.segP1 = Point(currentLocation.getX() - self.segLength/2, currentLocation.getY() - 5)
+                self.segP2 = Point(self.segP1.getX() + 10, self.segP1.getY() + 20)
+            elif prevDirection == "right":
+                self.segP1 = Point(currentLocation.getX() + self.segLength/2, currentLocation.getY() - 5)
+                self.segP2 = Point(self.segP1.getX() - 10, self.segP1.getY() + 20)
+            self.segLength = 10
