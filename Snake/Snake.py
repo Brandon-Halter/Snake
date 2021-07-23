@@ -19,22 +19,22 @@ def on_press(key):
 		if key == keyboard.Key.esc:
 			runGame = False
 			return False
-		elif key.char == 'd':
+		elif key.char == 'd' and direction != "left" and direction != "right":
 			segments.append(snakeSegment(Point(200, 200), Point(210,220), direction, 20))
 			segments[0].segDirection = "right"
 			segments[0].turnSegment(direction)
 			direction = 'right'
-		elif key.char == 'a':
+		elif key.char == 'a' and direction != "left" and direction != "right":
 			segments.append(snakeSegment(Point(200, 200), Point(210,220), direction, 20))
 			segments[0].segDirection = "left"
 			segments[0].turnSegment(direction)
 			direction = 'left'
-		elif key.char == 'w':
+		elif key.char == 'w' and direction != "up" and direction != "down":
 			segments.append(snakeSegment(Point(200, 200), Point(220,210), direction, 20))
 			segments[0].segDirection = "up"
 			segments[0].turnSegment(direction)
 			direction = 'up'
-		elif key.char == 's':
+		elif key.char == 's' and direction != "up" and direction != "down":
 			segments.append(snakeSegment(Point(200, 200), Point(220,210), direction, 20))
 			segments[0].segDirection = "down"
 			segments[0].turnSegment(direction)
