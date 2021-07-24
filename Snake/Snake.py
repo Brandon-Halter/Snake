@@ -10,6 +10,8 @@ win = GraphWin("gameWindow", 800, 800, autoflush=False)
 runGame = True
 direction = 'right'
 
+#=================================================================================================
+
 #Define behavior for keyboard listener
 def on_press(key):
 	global runGame
@@ -20,28 +22,30 @@ def on_press(key):
 			runGame = False
 			return False
 		elif key.char == 'd' and direction != "left" and direction != "right":
-			segments.append(snakeSegment(Point(200, 200), Point(210,220), direction, 20))
+			addSegment()
 			segments[0].segDirection = "right"
 			segments[0].turnSegment(direction)
 			direction = 'right'
 		elif key.char == 'a' and direction != "left" and direction != "right":
-			segments.append(snakeSegment(Point(200, 200), Point(210,220), direction, 20))
+			addSegment()
 			segments[0].segDirection = "left"
 			segments[0].turnSegment(direction)
 			direction = 'left'
 		elif key.char == 'w' and direction != "up" and direction != "down":
-			segments.append(snakeSegment(Point(200, 200), Point(220,210), direction, 20))
+			addSegment()
 			segments[0].segDirection = "up"
 			segments[0].turnSegment(direction)
 			direction = 'up'
 		elif key.char == 's' and direction != "up" and direction != "down":
-			segments.append(snakeSegment(Point(200, 200), Point(220,210), direction, 20))
+			addSegment()
 			segments[0].segDirection = "down"
 			segments[0].turnSegment(direction)
 			direction = 'down'
 
 	except:
 		pass
+
+#=================================================================================================
 
 def clearWindow(win):
 	for item in win.items[:]:
@@ -53,9 +57,11 @@ def redrawWindow(win, segments):
 		segment.segment.draw(win)
 	win.update()
 
-
+#=================================================================================================
 
 listener = keyboard.Listener(on_press=on_press)
+
+#=================================================================================================
 
 
 #Draw initial window
@@ -70,6 +76,8 @@ def runGame():
 	while(runGame):
 		for s in segments:
 			moveSnake(direction)
+
+#=================================================================================================
 
 #Make the snake respond to movement inputs
 def moveSnake(direction):
@@ -92,6 +100,29 @@ def moveSnake(direction):
 	clearWindow(win)
 	redrawWindow(win, segments)
 
+#=================================================================================================
+#This function adds a trailing segment in the snake
+def addSegment():
+	centerPoint = segments[0].segment.getCenter()
+	newLength = segments[0].segLength - 20
+
+	#Caclulate segment coordinates
+	if direction == "up":
+		P1 = Point(centerPoint.getX() + 5, centerPoint.getY() - segments[0].segLength/2)
+		P2 = Point(P1.getX() - 10, P1.getY() + segments[0].segLength - 20)
+	elif direction == "down":
+		P1 = Point(centerPoint.getX() + 5, centerPoint.getY() + segments[0].segLength/2)
+		P2 = Point(P1.getX() - 10, P1.getY() - segments[0].segLength + 20)
+	elif direction == "right":
+		P1 = Point(centerPoint.getX()  + segments[0].segLength/2, centerPoint.getY() - 5)
+		P2 = Point(P1.getX() - segments[0].segLength + 20, P1.getY() + 10)
+	elif direction == "left":
+		P1 = Point(centerPoint.getX()  - segments[0].segLength/2, centerPoint.getY() - 5)
+		P2 = Point(P1.getX() + segments[0].segLength - 20, P1.getY() + 10)
+
+	#Add new segment
+	segments.append(snakeSegment(P1, P2, direction, newLength))
+#=================================================================================================
 
 def main():
 	initialize()

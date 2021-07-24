@@ -102,7 +102,7 @@ class snakeSegment:
             elif prevDirection == "up":
                 self.segP1 = Point(currentLocation.getX() - 5, currentLocation.getY() - self.segLength/2)
                 self.segP2 = Point(self.segP1.getX() + 20, self.segP1.getY() - 10)
-            self.segLength = 10
+            self.segLength = 20
         elif self.segDirection == "left":
             #Calculate coordinates after turn and update height
             currentLocation = self.segment.getCenter()
@@ -112,7 +112,7 @@ class snakeSegment:
             elif prevDirection == "up":
                 self.segP1 = Point(currentLocation.getX() + 5, currentLocation.getY() - self.segLength/2)
                 self.segP2 = Point(self.segP1.getX() - 20, self.segP1.getY() - 10)
-            self.segLength = 10
+            self.segLength = 20
         elif self.segDirection == "up":
             #Calculate coordinates after turn and update height
             currentLocation = self.segment.getCenter()
@@ -122,7 +122,7 @@ class snakeSegment:
             elif prevDirection == "right":
                 self.segP1 = Point(currentLocation.getX() + self.segLength/2, currentLocation.getY() + 5)
                 self.segP2 = Point(self.segP1.getX() - 10, self.segP1.getY() - 20)
-            self.segLength = 10
+            self.segLength = 20
         elif self.segDirection == "down":
             #Calculate coordinates after turn and update height
             currentLocation = self.segment.getCenter()
@@ -132,4 +132,4 @@ class snakeSegment:
             elif prevDirection == "right":
                 self.segP1 = Point(currentLocation.getX() + self.segLength/2, currentLocation.getY() - 5)
                 self.segP2 = Point(self.segP1.getX() - 10, self.segP1.getY() + 20)
-            self.segLength = 10
+            self.segLength = 20
