@@ -1,14 +1,18 @@
 from graphics import *
 from pynput import keyboard
 import time
+import random
 from snakeSegment import snakeSegment
 
 #Create global variables
 initialSegment = snakeSegment(Point(380,395), Point(420,405), "right", 40)
+growthPellet = Rectangle(Point(600, 600), Point(608, 608))
+growthPellet.setFill("black")
 segments = [initialSegment]
 win = GraphWin("gameWindow", 800, 800, autoflush=False)
 runGame = True
 direction = 'right'
+
 
 #=================================================================================================
 
@@ -55,6 +59,7 @@ def clearWindow(win):
 def redrawWindow(win, segments):
 	for segment in segments:
 		segment.segment.draw(win)
+	growthPellet.draw(win)
 	win.update()
 
 #=================================================================================================
@@ -63,10 +68,35 @@ listener = keyboard.Listener(on_press=on_press)
 
 #=================================================================================================
 
+#Check if pellet and snake overlap. If they do move pellet
+def pelletHitDetection():
+	global growthPellet
+
+	xBoundOne = int(segments[0].segP1.getX())
+	xBoundTwo = int(segments[0].segP2.getX())
+	yBoundOne = int(segments[0].segP1.getY())
+	yBoundTwo = int(segments[0].segP2.getY())
+	pelletX1 = int(growthPellet.getP1().getX())
+	pelletX2 = int(growthPellet.getP2().getX())
+	pelletY1 = int(growthPellet.getP1().getY())
+	pelletY2 = int(growthPellet.getP2().getY())
+
+	if (pelletX1 in range(xBoundOne, xBoundTwo)) and (pelletY1 in range(yBoundOne, yBoundTwo)) or (pelletX1 in range(xBoundTwo, xBoundOne)) and (pelletY1 in range(yBoundTwo, yBoundOne)):
+		newX = random.randint(20, 700)
+		newY = random.randint(20, 700)
+		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
+		growthPellet.setFill("black")
+	elif (pelletX2 in range(xBoundOne, xBoundTwo)) and (pelletY2 in range(yBoundOne, yBoundTwo)) or (pelletX2 in range(xBoundTwo, xBoundOne)) and (pelletY2 in range(yBoundTwo, yBoundOne)):
+		newX = random.randint(20, 700)
+		newY = random.randint(20, 700)
+		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
+		growthPellet.setFill("black")
+#=================================================================================================
 
 #Draw initial window
 def initialize():
 	(initialSegment.segment).draw(win)
+	growthPellet.draw(win)
 	win.update()
 
 #Run the game
@@ -74,8 +104,8 @@ def runGame():
 	listener.start()
 
 	while(runGame):
-		for s in segments:
-			moveSnake(direction)
+		moveSnake(direction)
+		pelletHitDetection()
 
 #=================================================================================================
 
