@@ -57,10 +57,13 @@ def clearWindow(win):
 
 
 def redrawWindow(win, segments):
-	for segment in segments:
-		segment.segment.draw(win)
-	growthPellet.draw(win)
-	win.update()
+	try:
+		for segment in segments:
+			segment.segment.draw(win)
+		growthPellet.draw(win)
+		win.update()
+	except:
+		pass
 
 #=================================================================================================
 
@@ -81,16 +84,18 @@ def pelletHitDetection():
 	pelletY1 = int(growthPellet.getP1().getY())
 	pelletY2 = int(growthPellet.getP2().getY())
 
-	if (pelletX1 in range(xBoundOne, xBoundTwo)) and (pelletY1 in range(yBoundOne, yBoundTwo)) or (pelletX1 in range(xBoundTwo, xBoundOne)) and (pelletY1 in range(yBoundTwo, yBoundOne)):
+	if ((pelletX1 in range(xBoundOne, xBoundTwo + 1)) and (pelletY1 in range(yBoundOne, yBoundTwo + 1))) or ((pelletX1 in range(xBoundTwo, xBoundOne + 1)) and (pelletY1 in range(yBoundTwo, yBoundOne + 1))):
 		newX = random.randint(20, 700)
 		newY = random.randint(20, 700)
 		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
 		growthPellet.setFill("black")
-	elif (pelletX2 in range(xBoundOne, xBoundTwo)) and (pelletY2 in range(yBoundOne, yBoundTwo)) or (pelletX2 in range(xBoundTwo, xBoundOne)) and (pelletY2 in range(yBoundTwo, yBoundOne)):
+		segments[0].growSegment(direction)
+	elif ((pelletX2 in range(xBoundOne, xBoundTwo + 1)) and (pelletY2 in range(yBoundOne, yBoundTwo + 1))) or ((pelletX2 in range(xBoundTwo, xBoundOne + 1)) and (pelletY2 in range(yBoundTwo, yBoundOne + 1))):
 		newX = random.randint(20, 700)
 		newY = random.randint(20, 700)
 		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
 		growthPellet.setFill("black")
+		segments[0].growSegment(direction)
 #=================================================================================================
 
 #Draw initial window
@@ -139,19 +144,19 @@ def addSegment():
 	#Caclulate segment coordinates
 	if direction == "up":
 		P1 = Point(centerPoint.getX() + 5, centerPoint.getY() - segments[0].segLength/2)
-		P2 = Point(P1.getX() - 10, P1.getY() + segments[0].segLength - 20)
+		P2 = Point(P1.getX() - 10, P1.getY() + segments[0].segLength - 1)
 	elif direction == "down":
 		P1 = Point(centerPoint.getX() + 5, centerPoint.getY() + segments[0].segLength/2)
-		P2 = Point(P1.getX() - 10, P1.getY() - segments[0].segLength + 20)
+		P2 = Point(P1.getX() - 10, P1.getY() - segments[0].segLength + 1)
 	elif direction == "right":
 		P1 = Point(centerPoint.getX()  + segments[0].segLength/2, centerPoint.getY() - 5)
-		P2 = Point(P1.getX() - segments[0].segLength + 20, P1.getY() + 10)
+		P2 = Point(P1.getX() - segments[0].segLength + 1, P1.getY() + 10)
 	elif direction == "left":
 		P1 = Point(centerPoint.getX()  - segments[0].segLength/2, centerPoint.getY() - 5)
-		P2 = Point(P1.getX() + segments[0].segLength - 20, P1.getY() + 10)
+		P2 = Point(P1.getX() + segments[0].segLength - 1, P1.getY() + 10)
 
 	#Add new segment
-	segments.append(snakeSegment(P1, P2, direction, newLength))
+	segments.insert(1, snakeSegment(P1, P2, direction, newLength))
 #=================================================================================================
 
 def main():
