@@ -9,10 +9,11 @@ initialSegment = snakeSegment(Point(380,395), Point(420,405), "right", 40)
 growthPellet = Rectangle(Point(600, 600), Point(608, 608))
 growthPellet.setFill("black")
 segments = [initialSegment]
-win = GraphWin("gameWindow", 800, 800, autoflush=False)
+win = GraphWin("Snake", 800, 800, autoflush=False)
 runGame = True
 direction = 'right'
-
+score = 0
+counter = Text(Point(750, 30), "Score: " + str(score))
 
 #=================================================================================================
 
@@ -60,7 +61,10 @@ def redrawWindow(win, segments):
 	try:
 		for segment in segments:
 			segment.segment.draw(win)
+
 		growthPellet.draw(win)
+		counter.draw(win)
+
 		win.update()
 	except:
 		pass
@@ -74,6 +78,7 @@ listener = keyboard.Listener(on_press=on_press)
 #Check if pellet and snake overlap. If they do move pellet
 def pelletHitDetection():
 	global growthPellet
+	global score
 
 	xBoundOne = int(segments[0].segP1.getX())
 	xBoundTwo = int(segments[0].segP2.getX())
@@ -85,23 +90,34 @@ def pelletHitDetection():
 	pelletY2 = int(growthPellet.getP2().getY())
 
 	if ((pelletX1 in range(xBoundOne, xBoundTwo + 1)) and (pelletY1 in range(yBoundOne, yBoundTwo + 1))) or ((pelletX1 in range(xBoundTwo, xBoundOne + 1)) and (pelletY1 in range(yBoundTwo, yBoundOne + 1))):
+		#Redraw pellet
 		newX = random.randint(20, 700)
 		newY = random.randint(20, 700)
 		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
 		growthPellet.setFill("black")
+		#Grow snake
 		segments[0].growSegment(direction)
+		#Add score
+		score = score + 1
+		counter.setText("Score: " + str(score))
 	elif ((pelletX2 in range(xBoundOne, xBoundTwo + 1)) and (pelletY2 in range(yBoundOne, yBoundTwo + 1))) or ((pelletX2 in range(xBoundTwo, xBoundOne + 1)) and (pelletY2 in range(yBoundTwo, yBoundOne + 1))):
+		#Redraw pellet
 		newX = random.randint(20, 700)
 		newY = random.randint(20, 700)
 		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
 		growthPellet.setFill("black")
+		#Grow snake
 		segments[0].growSegment(direction)
+		#Add score
+		score = score + 1
+		counter.setText("Score: " + str(score))
 #=================================================================================================
 
 #Draw initial window
 def initialize():
 	(initialSegment.segment).draw(win)
 	growthPellet.draw(win)
+	counter.draw(win)
 	win.update()
 
 #Run the game
