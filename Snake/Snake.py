@@ -104,7 +104,7 @@ def pelletHitDetection():
 		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
 		growthPellet.setFill("black")
 		#Grow snake
-		segments[0].growSegment(direction)
+		segments[0].growSegment(direction, 10)
 		#Add score
 		score = score + 1
 		counter.setText("Score: " + str(score))
@@ -115,7 +115,7 @@ def pelletHitDetection():
 		growthPellet = Rectangle(Point(newX, newY), Point(newX + 8, newY + 8))
 		growthPellet.setFill("black")
 		#Grow snake
-		segments[0].growSegment(direction)
+		segments[0].growSegment(direction, 10)
 		#Add score
 		score = score + 1
 		counter.setText("Score: " + str(score))
@@ -176,7 +176,7 @@ def moveSnake(direction):
 
 	#Add front of snake
 	firstSegment = segments[0]
-	firstSegment.growSegment(direction)
+	firstSegment.growSegment(direction, 2)
 
 
 

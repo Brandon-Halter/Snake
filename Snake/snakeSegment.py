@@ -56,34 +56,34 @@ class snakeSegment:
 
 #=================================================================================================
 
-    def growSegment(self, direction):
+    def growSegment(self, direction, amount):
         #Change coordinates
         if direction == "right":
             #Check to see if P1 or P2 is leading edge
             if self.segP1.getX() > self.segP2.getX():
-                self.segP1 = Point(self.segP1.getX() + 2, self.segP1.getY())
+                self.segP1 = Point(self.segP1.getX() + amount, self.segP1.getY())
             else:
-                self.segP2 = Point(self.segP2.getX() + 2, self.segP2.getY())
+                self.segP2 = Point(self.segP2.getX() + amount, self.segP2.getY())
         elif direction == "left":
             #Check to see if P1 or P2 is leading edge
             if self.segP1.getX() < self.segP2.getX():
-                self.segP1 = Point(self.segP1.getX() - 2, self.segP1.getY())
+                self.segP1 = Point(self.segP1.getX() - amount, self.segP1.getY())
             else:
-                self.segP2 = Point(self.segP2.getX() - 2, self.segP2.getY())
+                self.segP2 = Point(self.segP2.getX() - amount, self.segP2.getY())
         elif direction == "up":
             #Check to see if P1 or P2 is leading edge
             if self.segP1.getY() < self.segP2.getY():
-                self.segP1 = Point(self.segP1.getX(), self.segP1.getY() - 2)
+                self.segP1 = Point(self.segP1.getX(), self.segP1.getY() - amount)
             else:
-                self.segP2 = Point(self.segP2.getX(), self.segP2.getY() - 2)
+                self.segP2 = Point(self.segP2.getX(), self.segP2.getY() - amount)
         elif direction == "down":
             #Check to see if P1 or P2 is leading edge
             if self.segP1.getY() < self.segP2.getY():
-                self.segP2 = Point(self.segP2.getX(), self.segP2.getY() + 2)
+                self.segP2 = Point(self.segP2.getX(), self.segP2.getY() + amount)
             else:
-                self.segP1 = Point(self.segP1.getX(), self.segP1.getY() + 2)
+                self.segP1 = Point(self.segP1.getX(), self.segP1.getY() + amount)
 
-        self.segLength = self.segLength + 2
+        self.segLength = self.segLength + amount
 
         #Update segment with new coordinates
         self.segment = Rectangle(self.segP1, self.segP2)
