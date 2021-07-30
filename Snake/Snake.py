@@ -75,21 +75,29 @@ listener = keyboard.Listener(on_press=on_press)
 
 #=================================================================================================
 
+def inRange(point, boundOne, boundTwo):
+	if (point < boundOne and point > boundTwo) or (point > boundOne and point < boundTwo):
+		return True
+	else:
+		return False
+
+#=================================================================================================
+
 #Check if pellet and snake overlap. If they do move pellet
 def pelletHitDetection():
 	global growthPellet
 	global score
 
-	xBoundOne = int(segments[0].segP1.getX())
-	xBoundTwo = int(segments[0].segP2.getX())
-	yBoundOne = int(segments[0].segP1.getY())
-	yBoundTwo = int(segments[0].segP2.getY())
-	pelletX1 = int(growthPellet.getP1().getX())
-	pelletX2 = int(growthPellet.getP2().getX())
-	pelletY1 = int(growthPellet.getP1().getY())
-	pelletY2 = int(growthPellet.getP2().getY())
+	xBoundOne = (segments[0].segP1.getX())
+	xBoundTwo = (segments[0].segP2.getX())
+	yBoundOne = (segments[0].segP1.getY())
+	yBoundTwo = (segments[0].segP2.getY())
+	pelletX1 = (growthPellet.getP1().getX())
+	pelletX2 = (growthPellet.getP2().getX())
+	pelletY1 = (growthPellet.getP1().getY())
+	pelletY2 = (growthPellet.getP2().getY())
 
-	if ((pelletX1 in range(xBoundOne, xBoundTwo + 1)) and (pelletY1 in range(yBoundOne, yBoundTwo + 1))) or ((pelletX1 in range(xBoundTwo, xBoundOne + 1)) and (pelletY1 in range(yBoundTwo, yBoundOne + 1))):
+	if (inRange(pelletX1, xBoundOne, xBoundTwo)) and (inRange(pelletY1, yBoundOne, yBoundTwo)):
 		#Redraw pellet
 		newX = random.randint(20, 700)
 		newY = random.randint(20, 700)
@@ -100,7 +108,7 @@ def pelletHitDetection():
 		#Add score
 		score = score + 1
 		counter.setText("Score: " + str(score))
-	elif ((pelletX2 in range(xBoundOne, xBoundTwo + 1)) and (pelletY2 in range(yBoundOne, yBoundTwo + 1))) or ((pelletX2 in range(xBoundTwo, xBoundOne + 1)) and (pelletY2 in range(yBoundTwo, yBoundOne + 1))):
+	elif (inRange(pelletX2, xBoundOne, xBoundTwo)) and (inRange(pelletY2, yBoundOne, yBoundTwo)):
 		#Redraw pellet
 		newX = random.randint(20, 700)
 		newY = random.randint(20, 700)
