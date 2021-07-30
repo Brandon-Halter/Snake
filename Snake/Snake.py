@@ -119,6 +119,29 @@ def pelletHitDetection():
 		#Add score
 		score = score + 1
 		counter.setText("Score: " + str(score))
+
+#=================================================================================================
+
+def deathDetection():
+	global runGame
+
+	#Get coordinates of snake head
+	headX1 = segments[0].segP1.getX()
+	headX2 = segments[0].segP2.getX()
+	headY1 = segments[0].segP1.getY()
+	headY2 = segments[0].segP2.getY()
+
+	#Loop trough snake segments
+	for i in range(1, len(segments) - 1):
+		segX1 = segments[i].segP1.getX()
+		segX2 = segments[i].segP2.getX()
+		segY1 = segments[i].segP1.getY()
+		segY2 = segments[i].segP2.getY()
+
+		if (inRange(headX1, segX1, segX2)) and (inRange(headY1, segY1, segY2)):
+			runGame = False
+		elif (inRange(headX2, segX1, segX2)) and (inRange(headY2, segY1, segY2)):
+			runGame = False
 #=================================================================================================
 
 #Draw initial window
@@ -135,6 +158,7 @@ def runGame():
 	while(runGame):
 		moveSnake(direction)
 		pelletHitDetection()
+		deathDetection()
 
 #=================================================================================================
 
