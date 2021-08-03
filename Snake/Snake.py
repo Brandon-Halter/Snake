@@ -10,10 +10,11 @@ growthPellet = Rectangle(Point(600, 600), Point(608, 608))
 growthPellet.setFill("black")
 segments = [initialSegment]
 win = GraphWin("Snake", 800, 800, autoflush=False)
-runGame = True
+runGame = False
 direction = 'right'
 score = 0
 counter = Text(Point(750, 30), "Score: " + str(score))
+gameState = "running"
 
 #=================================================================================================
 
@@ -21,34 +22,47 @@ counter = Text(Point(750, 30), "Score: " + str(score))
 def on_press(key):
 	global runGame
 	global direction
+	global gameState
 
-	try:
-		if key == keyboard.Key.esc:
-			runGame = False
-			return False
-		elif key.char == 'd' and direction != "left" and direction != "right":
-			addSegment()
-			segments[0].segDirection = "right"
-			segments[0].turnSegment(direction)
-			direction = 'right'
-		elif key.char == 'a' and direction != "left" and direction != "right":
-			addSegment()
-			segments[0].segDirection = "left"
-			segments[0].turnSegment(direction)
-			direction = 'left'
-		elif key.char == 'w' and direction != "up" and direction != "down":
-			addSegment()
-			segments[0].segDirection = "up"
-			segments[0].turnSegment(direction)
-			direction = 'up'
-		elif key.char == 's' and direction != "up" and direction != "down":
-			addSegment()
-			segments[0].segDirection = "down"
-			segments[0].turnSegment(direction)
-			direction = 'down'
+	if runGame:
+		try:
+			if key == keyboard.Key.esc:
+				runGame = False
+			elif key.char == 'd' and direction != "left" and direction != "right":
+				addSegment()
+				segments[0].segDirection = "right"
+				segments[0].turnSegment(direction)
+				direction = 'right'
+			elif key.char == 'a' and direction != "left" and direction != "right":
+				addSegment()
+				segments[0].segDirection = "left"
+				segments[0].turnSegment(direction)
+				direction = 'left'
+			elif key.char == 'w' and direction != "up" and direction != "down":
+				addSegment()
+				segments[0].segDirection = "up"
+				segments[0].turnSegment(direction)
+				direction = 'up'
+			elif key.char == 's' and direction != "up" and direction != "down":
+				addSegment()
+				segments[0].segDirection = "down"
+				segments[0].turnSegment(direction)
+				direction = 'down'
 
-	except:
-		pass
+		except:
+			pass
+
+	else:
+		try:
+			if key == keyboard.Key.esc:
+				runGame = False
+				gameState = "stopped"
+				return False
+			elif key == keyboard.Key.space:
+				runGame = True
+		except:
+			pass
+
 
 #=================================================================================================
 
@@ -80,6 +94,14 @@ def inRange(point, boundOne, boundTwo):
 		return True
 	else:
 		return False
+
+def resetGame():
+	global score
+	global segments
+
+	score = 0
+	segments.clear()
+	segments.append(snakeSegment(Point(380,395), Point(420,405), "right", 40))
 
 #=================================================================================================
 
@@ -144,6 +166,14 @@ def deathDetection():
 			runGame = False
 #=================================================================================================
 
+def drawStartMenu():
+	clearWindow(win)
+	menu = Text(Point(400, 400), "Press the Space key to start\n Press the ESC key to exit")
+	menu.draw(win)
+	win.update()
+
+#=================================================================================================
+
 #Draw initial window
 def initialize():
 	(initialSegment.segment).draw(win)
@@ -153,12 +183,18 @@ def initialize():
 
 #Run the game
 def runGame():
+	global runGame
+	runGame = False
+
 	listener.start()
 
-	while(runGame):
-		moveSnake(direction)
-		pelletHitDetection()
-		deathDetection()
+	while(gameState == "running"):
+		drawStartMenu()
+		while(runGame):
+			moveSnake(direction)
+			pelletHitDetection()
+			deathDetection()
+		resetGame()
 
 #=================================================================================================
 
