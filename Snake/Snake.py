@@ -227,7 +227,7 @@ def moveSnake(direction):
 #This function adds a trailing segment in the snake
 def addSegment():
 	centerPoint = segments[0].segment.getCenter()
-	newLength = segments[0].segLength - 20
+	newLength = segments[0].segLength - 10
 
 	#Caclulate segment coordinates
 	if direction == "up":
