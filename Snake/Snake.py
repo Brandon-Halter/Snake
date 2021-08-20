@@ -98,8 +98,11 @@ def inRange(point, boundOne, boundTwo):
 def resetGame():
 	global score
 	global segments
+	global direction
 
+	direction = "right"
 	score = 0
+	counter.setText("Score: 0")
 	segments.clear()
 	segments.append(snakeSegment(Point(380,395), Point(420,405), "right", 40))
 
@@ -146,6 +149,7 @@ def pelletHitDetection():
 
 def deathDetection():
 	global runGame
+	global score
 
 	#Get coordinates of snake head
 	headX1 = segments[0].segP1.getX()
