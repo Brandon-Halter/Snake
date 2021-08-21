@@ -168,11 +168,15 @@ def deathDetection():
 			runGame = False
 		elif (inRange(headX2, segX1, segX2)) and (inRange(headY2, segY1, segY2)):
 			runGame = False
+		elif (not inRange(headX1, 0, 800)) or (not inRange(headX2, 0, 800)):
+			runGame = False
+		elif (not inRange(headY1, 0, 800)) or (not inRange(headY2, 0, 800)):
+			runGame = False
 #=================================================================================================
 
 def drawStartMenu():
 	clearWindow(win)
-	menu = Text(Point(400, 400), "Press the Space key to start\n Press the ESC key to exit")
+	menu = Text(Point(400, 400), "Use WASD to move\n\nPress the Space key to start\n Press the ESC key to exit")
 	menu.draw(win)
 	win.update()
 
