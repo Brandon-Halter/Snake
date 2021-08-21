@@ -168,10 +168,12 @@ def deathDetection():
 			runGame = False
 		elif (inRange(headX2, segX1, segX2)) and (inRange(headY2, segY1, segY2)):
 			runGame = False
-		elif (not inRange(headX1, 0, 800)) or (not inRange(headX2, 0, 800)):
-			runGame = False
-		elif (not inRange(headY1, 0, 800)) or (not inRange(headY2, 0, 800)):
-			runGame = False
+
+	#Check if snake is out of bounds
+	if (headX1 < 0) or (headX1 > 800) or (headX2 < 0) or (headX2 > 800):
+		runGame = False
+	elif (headY1 < 0) or (headY1 > 800) or (headY2 < 0) or (headY2 > 800):
+		runGame = False
 #=================================================================================================
 
 def drawStartMenu():
